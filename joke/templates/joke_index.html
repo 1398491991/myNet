@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title%}笑话{% endblock %}</title>
+{% block head %}
+    <script src="/static/js/joke_action.js"></script>
+{% endblock %}
+</head>
+<body>
+<div>{% block div %}
+    {% if joke_list %}
+        {% for joke in joke_list %}
+        <div class="panel panel-default">
+          <div class="panel-heading">{{ joke.title }}</div>
+          <div class="panel-body">
+            <p>{{ joke.content }}</p>
+          </div>
+                <div class="btn-group btn-group-sm">
+                      <button type="button" class="btn btn-default" onclick="joke_zan({{ joke.joke_id }})">赞</button>
+                      <button type="button" class="btn btn-default" onclick="joke_cai({{ joke.joke_id }})">踩</button>
+{#                      <button type="button" class="btn btn-default" onclick="joke_pinglun({{ joke.joke_id }})">评论</button>#}
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                              <input type="text" class="form-control" placeholder="讲两句吧^-^" id="{{ joke.joke_id }}">
+                              <span class="input-group-btn">
+                                <button class="btn btn-default" type="button" onclick="joke_pinglun({{ joke.joke_id }})">评论</button>
+                              </span>
+                            </div><!-- /input-group -->
+                          </div><!-- /.col-lg-6 -->
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+    <div class="alert alert-success" role="alert">哈哈，没了^-^</div>
+    {% endif %}
+  <ul class="pager">
+    {% if previous_page %}
+        <li><a href=/joke/?page={{ previous_page }}>上一页</a></li>
+    {% endif %}
+    {% if joke_list %}
+        <li><a href=/joke/?page={{ next_page }}>下一页</a></li>
+    {% else %}
+        <li><a href=/joke/>回到首页</a></li>
+    {% endif %}
+  </ul>
+{% endblock %}</div>
+
+</body>
+</html>
