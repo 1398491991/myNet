@@ -22,7 +22,7 @@ def user_login(request):
         user_id=cur.fetchone()
         if user_id:
             user_id=user_id[0]
-            user_name=request.session.setdefault('user_name',user_name)
+            request.session.setdefault(user_name,user_name)
             content={'msg':u'登录成功','state':1}
         else:
             user_id=0
